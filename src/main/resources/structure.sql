@@ -83,7 +83,9 @@ create table ent_event
     end_date_time timestamp not null,
     title varchar,
     maintain varchar,
-    meta_references varchar
+    meta_references varchar,
+    author bigint,
+    foreign key (author) references ent_user(id)
 );
 
 alter table ent_event
