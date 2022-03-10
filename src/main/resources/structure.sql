@@ -85,7 +85,8 @@ create table ent_event
     maintain varchar,
     meta_references varchar,
     author bigint,
-    foreign key (author) references ent_user(id)
+    foreign key (author) references ent_user(id),
+    is_public boolean default false
 );
 
 alter table ent_event
