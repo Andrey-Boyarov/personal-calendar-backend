@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -18,6 +19,8 @@ public class BaseEntity {
 
     @CreationTimestamp
     private LocalDateTime creationTime;
+
+    private UUID uuid;
 
     private Boolean isRelevant;
 }

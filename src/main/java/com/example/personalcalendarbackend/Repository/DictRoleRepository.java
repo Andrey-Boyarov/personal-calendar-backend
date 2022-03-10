@@ -1,13 +1,13 @@
 package com.example.personalcalendarbackend.Repository;
 
 import com.example.personalcalendarbackend.Base.BaseRepository;
-import com.example.personalcalendarbackend.Entity.Role;
+import com.example.personalcalendarbackend.Entity.DictRole;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface RoleRepository extends BaseRepository<Role, Long> {
+public interface DictRoleRepository extends BaseRepository<DictRole, Long> {
 
-    Optional<Role> findByName(String name);
+    Optional<DictRole> findByName(String name);
 }

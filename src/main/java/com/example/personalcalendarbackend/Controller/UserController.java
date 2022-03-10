@@ -1,7 +1,7 @@
 package com.example.personalcalendarbackend.Controller;
 
-import com.example.personalcalendarbackend.Entity.Role;
-import com.example.personalcalendarbackend.Service.RoleService;
+import com.example.personalcalendarbackend.Entity.DictRole;
+import com.example.personalcalendarbackend.Service.DictRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final RoleService roleService;
+    private final DictRoleService dictRoleService;
 
     @GetMapping("/getRole")
-    public Role getRole(){
+    public DictRole getRole(){
         //todo enable security and do real
-        return roleService.getRoleByName("consumer");
+        return dictRoleService.getRoleByName("consumer");
     }
 }
