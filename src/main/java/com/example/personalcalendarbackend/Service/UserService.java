@@ -14,7 +14,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserLocal getUserById(Long id){
+    public User getUserById(Long id){
+
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public UserLocal getUserLocalById(Long id){
 
         Optional<User> optional = userRepository.findById(id);
 

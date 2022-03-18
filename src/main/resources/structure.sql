@@ -153,3 +153,21 @@ alter table dict_role alter column id set default nextval('public.dict_role_id_s
 
 alter sequence dict_role_id_seq owned by dict_role.id;
 
+alter table meta_password drop column name;
+
+alter table meta_password drop column description;
+
+alter table meta_password alter column is_relevant set default true;
+
+alter table ent_user alter column is_relevant set default true;
+
+alter table ent_subscription alter column is_relevant set default true;
+
+alter table ent_event alter column is_relevant set default true;
+
+alter table dict_role alter column is_relevant set default true;
+
+alter table ent_subscription drop column name;
+
+alter table ent_subscription drop column description;
+

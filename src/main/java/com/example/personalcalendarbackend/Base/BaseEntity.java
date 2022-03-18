@@ -23,4 +23,14 @@ public class BaseEntity {
     private UUID uuid;
 
     private Boolean isRelevant;
+
+    @PrePersist
+    public void initialize() {
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
+        if (isRelevant == null) {
+            isRelevant = true;
+        }
+    }
 }
