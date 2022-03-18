@@ -123,3 +123,33 @@ create unique index ent_subscription_id_uindex
 create unique index ent_subscription_uuid_uindex
     on ent_subscription (uuid);
 
+create sequence ent_user_id_seq;
+
+alter table ent_user alter column id set default nextval('public.ent_user_id_seq');
+
+alter sequence ent_user_id_seq owned by ent_user.id;
+
+create sequence meta_password_id_seq;
+
+alter table meta_password alter column id set default nextval('public.meta_password_id_seq');
+
+alter sequence meta_password_id_seq owned by meta_password.id;
+
+create sequence ent_subscription_id_seq;
+
+alter table ent_subscription alter column id set default nextval('public.ent_subscription_id_seq');
+
+alter sequence ent_subscription_id_seq owned by ent_subscription.id;
+
+create sequence ent_event_id_seq;
+
+alter table ent_event alter column id set default nextval('public.ent_event_id_seq');
+
+alter sequence ent_event_id_seq owned by ent_event.id;
+
+create sequence dict_role_id_seq;
+
+alter table dict_role alter column id set default nextval('public.dict_role_id_seq');
+
+alter sequence dict_role_id_seq owned by dict_role.id;
+
