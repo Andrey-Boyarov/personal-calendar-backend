@@ -38,7 +38,7 @@ public class UserController {
         return passwordService.createPassword(local);
     }
 
-    @GetMapping("/getSubscribtionsAsString/{id}")
+    @GetMapping("/getSubscriptionsAsString/{id}")
     public String getSubscriptionsAsString(@PathVariable Long id){
 
         return subscriptionService.getSubscriptionsAsString(id);
