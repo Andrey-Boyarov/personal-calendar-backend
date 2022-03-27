@@ -3,6 +3,7 @@ package com.example.personalcalendarbackend.Auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -42,10 +45,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
-                .and()
-                .authorizeRequests().anyRequest().permitAll()
-                .and()
+                        .and()
+
+                .authorizeRequests().antMatchers(POST, "/login").permitAll()
+                        .and()
+
+                .authorizeRequests().anyRequest().authenticated()
+                        .and()
+
                 .addFilter(new AuthFilter(authenticationManagerBean()))
+                .addFilterBefore(new AuthorizeFilter(), UsernamePasswordAuthenticationFilter.class)
                 /*.formLogin(form -> form
                         .loginPage("/login")
                         .permitAll())

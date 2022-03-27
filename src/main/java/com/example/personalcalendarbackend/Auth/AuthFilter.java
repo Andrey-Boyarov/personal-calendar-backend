@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.personalcalendarbackend.Entity.DictRole;
 import com.example.personalcalendarbackend.Entity.SysUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 public class AuthFilter extends UsernamePasswordAuthenticationFilter {
@@ -40,7 +45,7 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User user = (User) authResult.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("key for signing".getBytes());
+        Algorithm algorithm = Algorithm.HMAC256("key for signing".getBytes()); //todo key
         String token = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(Timestamp.valueOf(LocalDateTime.now().plusMinutes(2)))
@@ -52,7 +57,10 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
                 .withExpiresAt(Timestamp.valueOf(LocalDateTime.now().plusMinutes(10)))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
-        response.setHeader("access_token", token);
-        response.setHeader("refresh_token", refresh_token);
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("access_token", token);
+        tokens.put("refresh_token", refresh_token);
+        response.setContentType(APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }
 }
