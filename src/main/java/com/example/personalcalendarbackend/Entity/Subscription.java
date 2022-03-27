@@ -16,9 +16,9 @@ public class Subscription extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_ref")
-    private User userRef;
+    private SysUser sysUserRef;
 
     @ManyToOne
     @JoinColumn(name = "target_ref")
-    private User targetRef;
+    private SysUser targetRef;
 }

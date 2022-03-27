@@ -1,6 +1,6 @@
 package com.example.personalcalendarbackend.Local;
 
-import com.example.personalcalendarbackend.Entity.User;
+import com.example.personalcalendarbackend.Entity.SysUser;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,9 +14,9 @@ public class PasswordLocal {
 
     private String password;
 
-    public PasswordLocal(User user, String password){
+    public PasswordLocal(SysUser sysUser, String password){
 
-        userRef = user.getId();
+        userRef = sysUser.getId();
         this.password = password;
     }
 }

@@ -171,3 +171,35 @@ alter table ent_subscription drop column name;
 
 alter table ent_subscription drop column description;
 
+create unique index ent_user_login_uindex
+    on ent_user (login);
+
+alter table ent_user drop constraint ent_user_role_fkey;
+
+alter table ent_user drop column role;
+
+alter table ent_user
+    add constraint ent_user_role_fkey
+        foreign key (role) references dict_role;
+
+create table user_role_link
+(
+    id            bigserial                          not null
+        constraint role_link_pk
+            primary key,
+    creation_time timestamp                          not null,
+    is_relevant   boolean default true               not null,
+    uuid          uuid    default uuid_generate_v4() not null,
+    user_ref bigint not null,
+    role_ref bigint not null
+);
+
+alter table user_role_link
+    owner to postgres;
+
+create unique index role_link_id_uindex
+    on user_role_link (id);
+
+create unique index user_role_link_uuid_uindex
+    on user_role_link (uuid);
+

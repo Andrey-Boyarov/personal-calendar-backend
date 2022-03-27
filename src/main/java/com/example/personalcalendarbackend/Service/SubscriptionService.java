@@ -1,7 +1,7 @@
 package com.example.personalcalendarbackend.Service;
 
 import com.example.personalcalendarbackend.Entity.Subscription;
-import com.example.personalcalendarbackend.Entity.User;
+import com.example.personalcalendarbackend.Entity.SysUser;
 import com.example.personalcalendarbackend.Repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,15 +24,15 @@ public class SubscriptionService {
 
     public List<Subscription> getSubscriptionsByUser(Long id){
 
-        User user = userService.getUserById(id);
-        if (user == null) return new ArrayList<>();
+        SysUser sysUser = userService.getUserById(id);
+        if (sysUser == null) return new ArrayList<>();
 
-        return getSubscriptionsByUser(user);
+        return getSubscriptionsByUser(sysUser);
     }
 
-    public List<Subscription> getSubscriptionsByUser(User user){
+    public List<Subscription> getSubscriptionsByUser(SysUser sysUser){
 
-        return subscriptionRepository.findAllByUserRef(user);
+        return subscriptionRepository.findAllBySysUserRef(sysUser);
     }
 
     public String getSubscriptionsAsString(List<Subscription> list){
