@@ -32,4 +32,8 @@ public class UserService {
                 ? new UserLocal(optional.get())
                 : null;
     }
+
+    public SysUser getUserByLogin(String login){
+        return userRepository.findByLoginAndIsRelevantTrue(login).get();
+    }
 }

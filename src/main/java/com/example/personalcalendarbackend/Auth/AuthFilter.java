@@ -53,7 +53,7 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refresh_token = JWT.create()
-                .withSubject(user.getPassword())
+                .withSubject(user.getUsername())
                 .withExpiresAt(Timestamp.valueOf(LocalDateTime.now().plusMinutes(10)))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
