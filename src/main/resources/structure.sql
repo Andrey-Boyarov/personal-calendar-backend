@@ -203,3 +203,4 @@ create unique index role_link_id_uindex
 create unique index user_role_link_uuid_uindex
     on user_role_link (uuid);
 
+drop table meta_password;
