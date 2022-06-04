@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -42,23 +45,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
+//                .cors()
+//                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
-                        .and()
-
-                .authorizeRequests().antMatchers("/login", "/api/user/refreshtoken").permitAll()
+                .and()
+                .authorizeRequests().antMatchers( "/api/user/refreshtoken").permitAll()
+                .and()
+                .formLogin(form -> form
+                        .loginPage("/src/loginPage/login.html")
+                        .permitAll())
+                .logout().permitAll()
                         .and()
 
                 .authorizeRequests().anyRequest().authenticated()
                         .and()
 
                 .addFilter(new AuthFilter(authenticationManagerBean()))
-                .addFilterBefore(new AuthorizeFilter(), UsernamePasswordAuthenticationFilter.class)
-                /*.formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll())
-                .logout().permitAll()*/;
+                .addFilterBefore(new AuthorizeFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 
