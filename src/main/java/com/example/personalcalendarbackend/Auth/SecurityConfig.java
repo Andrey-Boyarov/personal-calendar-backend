@@ -47,15 +47,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-//                .cors()
-//                .and()
+                .cors()
+                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
                 .authorizeRequests().antMatchers( "/api/user/refreshtoken").permitAll()
                 .and()
                 .formLogin(form -> form
-                        .loginPage("/src/loginPage/login.html")
+                        .loginPage("/login")
                         .permitAll())
                 .logout().permitAll()
                         .and()
