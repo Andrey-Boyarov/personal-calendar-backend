@@ -18,15 +18,12 @@ public class SubscriptionService {
     private final UserService userService;
 
     public String listToString(List<Subscription> list){
-
         return list.stream().map(sub -> sub.getTargetRef().getLogin()).collect(Collectors.joining(" "));
     }
 
     public List<Subscription> getSubscriptionsByUser(Long id){
-
         SysUser sysUser = userService.getUserById(id);
         if (sysUser == null) return new ArrayList<>();
-
         return getSubscriptionsByUser(sysUser);
     }
 

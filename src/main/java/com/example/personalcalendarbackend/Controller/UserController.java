@@ -4,7 +4,9 @@ import com.example.personalcalendarbackend.Auth.AuthService;
 import com.example.personalcalendarbackend.Entity.DictRole;
 import com.example.personalcalendarbackend.Entity.SysUser;
 import com.example.personalcalendarbackend.Local.PasswordLocal;
+import com.example.personalcalendarbackend.Local.UserItemPojo;
 import com.example.personalcalendarbackend.Local.UserLocal;
+import com.example.personalcalendarbackend.Service.CurUserService;
 import com.example.personalcalendarbackend.Service.DictRoleService;
 import com.example.personalcalendarbackend.Service.SubscriptionService;
 import com.example.personalcalendarbackend.Service.UserService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -25,11 +28,16 @@ public class UserController {
     private final UserService userService;
     private final SubscriptionService subscriptionService;
     private final AuthService authService;
+    private final CurUserService curUserService;
 
-    @GetMapping("/getRole")
-    public DictRole getRole(){
-        //todo enable security and do real
-        return dictRoleService.getRoleByName("consumer");
+    @GetMapping("/getRoles")
+    public List<DictRole> getRoles(){
+        return curUserService.getCurrentUser().getRoles();
+    }
+
+    @GetMapping("/getAllUsers")
+    public List<UserItemPojo> getAllUsers(){
+        return userService.getAllUsers();
     }
 
     @GetMapping("/refreshtoken")
@@ -47,12 +55,5 @@ public class UserController {
     public String getSubscriptionsAsString(@PathVariable Long id){
 
         return subscriptionService.getSubscriptionsAsString(id);
-    }
-
-    @GetMapping("/c")
-    public void c (){
-        SysUser user = userService.getUserById(1L);
-        user.setPassword("root");
-        userService.saveUserWithEncode(user);
     }
 }
