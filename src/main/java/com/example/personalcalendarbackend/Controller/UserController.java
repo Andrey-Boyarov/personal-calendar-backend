@@ -63,7 +63,7 @@ public class UserController {
         return subscriptionService.getSubscriptionsAsString(id);
     }
 
-    @GetMapping("/api/user/her")
+    @GetMapping("/her")
     public String her(){
         return "her";
     }
