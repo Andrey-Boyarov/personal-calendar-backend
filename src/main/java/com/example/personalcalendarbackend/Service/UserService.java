@@ -1,5 +1,6 @@
 package com.example.personalcalendarbackend.Service;
 
+import com.example.personalcalendarbackend.Entity.DictRole;
 import com.example.personalcalendarbackend.Entity.SysUser;
 import com.example.personalcalendarbackend.Local.UserItemPojo;
 import com.example.personalcalendarbackend.Local.UserLocal;
@@ -21,7 +22,7 @@ public class UserService {
 
     public List<UserItemPojo> getAllUsers(){
         return userRepository.findAllByIsRelevantTrue()
-                .stream().map(user -> new UserItemPojo(user.getId(), user.getLogin())).collect(Collectors.toList());
+                .stream().map(user -> new UserItemPojo(user.getId(), user.getLogin(), user.getRoles().stream().map(DictRole::getName).reduce((s, s2) -> s + s2).orElse(""))).collect(Collectors.toList());
     }
 
     public SysUser saveUserWithEncode(SysUser user){

@@ -10,4 +10,5 @@ import lombok.Setter;
 public class UserItemPojo {
     private Long userId;
     private String username;
+    private String roles;
 }
