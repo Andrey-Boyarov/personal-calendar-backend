@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -31,8 +32,8 @@ public class UserController {
     private final CurUserService curUserService;
 
     @GetMapping("/getRoles")
-    public List<DictRole> getRoles(){
-        return curUserService.getCurrentUser().getRoles();
+    public List<String> getRoles(){
+        return curUserService.getCurrentUser().getRoles().stream().map(DictRole::getName).collect(Collectors.toList());
     }
 
     @GetMapping("/getAllUsers")
