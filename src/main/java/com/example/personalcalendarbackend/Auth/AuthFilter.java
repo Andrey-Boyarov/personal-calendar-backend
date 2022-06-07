@@ -48,13 +48,13 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
         Algorithm algorithm = Algorithm.HMAC256("key for signing".getBytes()); //todo key
         String token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(Timestamp.valueOf(LocalDateTime.now().plusMinutes(2)))
+                .withExpiresAt(Timestamp.valueOf(LocalDateTime.now().plusMinutes(2).plusDays(2)))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refresh_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(Timestamp.valueOf(LocalDateTime.now().plusMinutes(10)))
+                .withExpiresAt(Timestamp.valueOf(LocalDateTime.now().plusMinutes(10).plusWeeks(1)))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
         Map<String, String> tokens = new HashMap<>();
