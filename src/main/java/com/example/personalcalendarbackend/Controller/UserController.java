@@ -41,6 +41,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/delete")
+    public boolean deleteUser(@RequestBody Long userId){
+        return userService.deleteUser(userId);
+    }
+
     @GetMapping("/refreshtoken")
     public void refreshtoken(HttpServletRequest request, HttpServletResponse response){
         authService.refreshtoken(request, response);

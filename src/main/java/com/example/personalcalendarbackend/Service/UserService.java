@@ -45,4 +45,12 @@ public class UserService {
     public SysUser getUserByLogin(String login){
         return userRepository.findByLoginAndIsRelevantTrue(login).get();
     }
+
+    public boolean deleteUser(Long userId) {
+        SysUser user = userRepository.findById(userId).orElse(null);
+        if (user == null) return false;
+        user.setIsRelevant(false);
+        userRepository.save(user);
+        return true;
+    }
 }
