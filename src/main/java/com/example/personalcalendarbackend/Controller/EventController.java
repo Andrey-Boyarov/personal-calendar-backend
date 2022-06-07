@@ -55,7 +55,7 @@ public class EventController {
                 eventRepository.findAllByAuthor(user).stream()
                 .map(e -> new EventLocal(
                         e.getId(),
-                        e.getStartDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm")),
+                        e.getStartDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                         e.getTitle(),
                         e.getMaintain())
                 ).collect(Collectors.toList())).orElse(new ArrayList<>());
