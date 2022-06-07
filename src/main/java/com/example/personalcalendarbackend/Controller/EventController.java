@@ -75,4 +75,16 @@ public class EventController {
         eventRepository.save(event);
         return true;
     }
+
+    @GetMapping("/delete/{eventId}")
+    public boolean delete(@PathVariable Long eventId){
+        eventRepository.save(
+                eventRepository.findById(eventId)
+                        .map(e -> {
+                            e.setIsRelevant(false);
+                            return e;
+                        })
+                        .get());
+        return true;
+    }
 }
