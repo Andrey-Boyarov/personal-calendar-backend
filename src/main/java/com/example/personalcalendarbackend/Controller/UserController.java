@@ -41,7 +41,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/delete")
+    @DeleteMapping("/delete")
     public boolean deleteUser(@RequestBody Long userId){
         return userService.deleteUser(userId);
     }
