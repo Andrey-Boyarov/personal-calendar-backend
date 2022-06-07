@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface EventRepository extends BaseRepository<Event, Long> {
 
-    List<Event> findAllByAuthor(SysUser author);
+    List<Event> findAllByAuthorAndIsRelevantTrue(SysUser author);
 }

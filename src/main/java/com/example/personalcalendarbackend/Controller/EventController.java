@@ -31,7 +31,7 @@ public class EventController {
     public List<Event> getAllEventsByDay(@RequestParam LocalDate date){
         return curUserService.getCurrentUserOpt().map(user ->
             subscriptionService.getSubscriptionsByUser(user).stream()
-                    .map(sub -> eventRepository.findAllByAuthor(sub.getTargetRef()).stream())
+                    .map(sub -> eventRepository.findAllByAuthorAndIsRelevantTrue(sub.getTargetRef()).stream())
                     .reduce(Stream::concat).orElse(Stream.empty())
                     .filter(event ->
                             event.getStartDateTime().toLocalDate().equals(date) || event.getEndDateTime().toLocalDate().equals(date) ||
@@ -45,7 +45,7 @@ public class EventController {
     public List<Event> getAllEventsBySubscription(){
         return curUserService.getCurrentUserOpt().map(user ->
             subscriptionService.getSubscriptionsByUser(user).stream()
-                    .map(sub -> eventRepository.findAllByAuthor(sub.getTargetRef()).stream())
+                    .map(sub -> eventRepository.findAllByAuthorAndIsRelevantTrue(sub.getTargetRef()).stream())
                     .reduce(Stream::concat).orElse(Stream.empty())
                     .collect(Collectors.toList())
         ).orElse(new ArrayList<>());
@@ -54,7 +54,7 @@ public class EventController {
     @GetMapping("/getAllMyEvents")
     public List<EventLocal> getAllMyEvents(){
         return curUserService.getCurrentUserOpt().map(user ->
-                eventRepository.findAllByAuthor(user).stream()
+                eventRepository.findAllByAuthorAndIsRelevantTrue(user).stream()
                 .map(e -> new EventLocal(
                         e.getId(),
                         e.getStartDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
