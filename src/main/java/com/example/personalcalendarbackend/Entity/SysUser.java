@@ -39,4 +39,9 @@ public class SysUser extends BaseEntity {
     public List<DictRole> getRoles(){
         return links.stream().map(UserRoleLink::getRoleRef).collect(Collectors.toList());
     }
+
+    public SysUser(String username, String password){
+        login = username;
+        this.password = password;
+    }
 }

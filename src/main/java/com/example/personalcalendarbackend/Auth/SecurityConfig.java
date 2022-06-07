@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
-                .authorizeRequests().antMatchers( "/api/user/refreshtoken").permitAll()
+                .authorizeRequests().antMatchers( "/api/user/refreshtoken", "/registration").permitAll()
                 .and()
                 .formLogin(form -> form
                         .loginPage("/login")
