@@ -2,6 +2,7 @@ package com.example.personalcalendarbackend.Controller;
 
 
 import com.example.personalcalendarbackend.Entity.Event;
+import com.example.personalcalendarbackend.Local.EventLocal;
 import com.example.personalcalendarbackend.Repository.EventRepository;
 import com.example.personalcalendarbackend.Service.CurUserService;
 import com.example.personalcalendarbackend.Service.SubscriptionService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,5 +47,17 @@ public class EventController {
                     .reduce(Stream::concat).orElse(Stream.empty())
                     .collect(Collectors.toList())
         ).orElse(new ArrayList<>());
+    }
+
+    @GetMapping("/getAllMyEvents")
+    public List<EventLocal> getAllMyEvents(){
+        return curUserService.getCurrentUserOpt().map(user ->
+                eventRepository.findAllByAuthor(user).stream()
+                .map(e -> new EventLocal(
+                        e.getId(),
+                        e.getStartDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm")),
+                        e.getTitle(),
+                        e.getMaintain())
+                ).collect(Collectors.toList())).orElse(new ArrayList<>());
     }
 }
