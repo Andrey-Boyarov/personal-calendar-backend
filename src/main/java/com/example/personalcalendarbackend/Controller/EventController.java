@@ -2,6 +2,7 @@ package com.example.personalcalendarbackend.Controller;
 
 
 import com.example.personalcalendarbackend.Entity.Event;
+import com.example.personalcalendarbackend.Local.EventCreateLocal;
 import com.example.personalcalendarbackend.Local.EventLocal;
 import com.example.personalcalendarbackend.Repository.EventRepository;
 import com.example.personalcalendarbackend.Service.CurUserService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,5 +61,18 @@ public class EventController {
                         e.getTitle(),
                         e.getMaintain())
                 ).collect(Collectors.toList())).orElse(new ArrayList<>());
+    }
+
+    @PostMapping("/create")
+    public boolean create(@RequestBody EventCreateLocal local){
+        Event event = new Event();
+        event.setAuthor(curUserService.getCurrentUser());
+        event.setTitle(local.getEventTitle());
+        event.setMaintain(local.getEventMaintain());
+        LocalDate date = LocalDate.parse(local.getEventDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        event.setStartDateTime(date.atStartOfDay());
+        event.setEndDateTime(date.atStartOfDay());
+        eventRepository.save(event);
+        return true;
     }
 }

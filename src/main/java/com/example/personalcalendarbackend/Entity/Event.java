@@ -1,7 +1,9 @@
 package com.example.personalcalendarbackend.Entity;
 
 import com.example.personalcalendarbackend.Base.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ent_event")
 public class Event extends BaseEntity {
 
