@@ -54,14 +54,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers( "/api/user/refreshtoken", "/registration").permitAll()
                 .and()
-                .formLogin()
-                .loginPage("/login")
+//                .formLogin()
+//                .loginPage("/login")
 //                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/redirect", true)
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll())
-                .and().logout().permitAll()
+//                .defaultSuccessUrl("/redirect", true)
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/redirect")
+                        .permitAll())
+                .logout().permitAll()
                         .and()
 
                 .authorizeRequests().anyRequest().authenticated()
