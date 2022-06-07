@@ -58,11 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .loginPage("/login")
 //                .loginProcessingUrl("/login")
 //                .defaultSuccessUrl("/redirect", true)
-                .formLogin().loginPage("/login").defaultSuccessUrl("/redirect")
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/redirect")
-//                        .permitAll())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/redirect")
+                        .permitAll())
+                .formLogin()
+                .defaultSuccessUrl("/redirect")
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login")
                         .and()
