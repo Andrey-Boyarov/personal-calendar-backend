@@ -68,7 +68,7 @@ public class EventController {
         Event event = new Event();
         event.setAuthor(curUserService.getCurrentUser());
         event.setTitle(local.getEventTitle());
-        event.setMaintain(local.getEventMaintain());
+        event.setMaintain(local.getEventMainTain());
         LocalDate date = LocalDate.parse(local.getEventDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         event.setStartDateTime(date.atStartOfDay());
         event.setEndDateTime(date.atStartOfDay());

@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EventCreateLocal {
     private String eventDate;
-    private String eventMaintain;
+    private String eventMainTain;
     private String eventTitle;
 }
