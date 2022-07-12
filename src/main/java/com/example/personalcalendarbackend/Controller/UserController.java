@@ -62,9 +62,4 @@ public class UserController {
 
         return subscriptionService.getSubscriptionsAsString(id);
     }
-
-    @GetMapping("/her")
-    public String her(){
-        return "her";
-    }
 }
